@@ -12,13 +12,14 @@ response = get_info('https://api.gael.cloud/general/public/sismos')
 #de las tablas y el gráfico
 response_ordenado = []
 for i, item in enumerate(response, 1):
-    response_ordenado.append({'slug': str(i), 'fecha':(datetime.datetime.strptime(item['Fecha'], '%Y-%m-%d %H:%M:%S')).strftime('%d %b %Y - %H:%M:%S'),
+    response_ordenado.append({'slug': str(i), 'fecha':(datetime.datetime.strptime(item['Fecha'], '%Y-%m-%d %H:%M:%S')).strftime('%d %b %Y - %H:%M'),
     'profundidad':item['Profundidad'], 'magnitud':item['Magnitud'], 'refGeografica':cambiar(item['RefGeografica'])})
 
 #Se ordena en una lista de tuplas los valores que iran en abscisa y ordenada
 grafico_data = []
 for item in response_ordenado:
-    grafico_data.append((item['fecha'],float(item['magnitud'].split(' ')[0])))
+    #grafico_data.append((item['fecha'],float(item['magnitud'].split(' ')[0])))
+    grafico_data.append((item['fecha'],float(item['profundidad'])))
 
 #Se separan los valores de abscisa o ordenada para cargar en el template
 labels = [row[0] for row in grafico_data]
