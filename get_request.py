@@ -1,7 +1,7 @@
 import requests
 import json
 
-
+#Método que con el uso de la biblioteca requests permite conectar y obtener respuesta de una API
 def get_info(url):
     #Codigo extra por si la request no existe (page not found)
     response = requests.get(url)

@@ -4,29 +4,101 @@
     <title>
         Sismos
     </title>
+    <link rel="icon" href="https://img1.freepng.es/20180427/atq/kisspng-earthquake-weather-computer-icons-clip-art-earthquake-5ae2ee1e8890b6.6228560915248215345594.jpg">
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css' ) }}">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.8.0/dist/chart.min.js"></script>
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   </head>
   <body>
       
-        <div class="container">
-            <div class="row">
-                {% for sismo in data %}
-                <div class="col-md-8">
-                    
-                </div>
-                {% endfor %}
-            </div>
-        </div>
+        <h1 class="mt-3"><span class="blue">&lt;</span>Sismos<span class="blue">&gt;</span></h1>
+            <h2>Test Marco Espinoza para appWorki</h2>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+            <!-- Tablas -->
+            <table id="myTable" class="container text-center table table-hover">
+                {% for sismo in data %}
+                <tbody>
+                    <tr>
+                        <td style="color:aqua;"><h4>Sismo {{sismo['slug']}} </h4></td>
+                        <td style="color: aqua;"><h4>Información</h4></td>
+                    </tr>
+                    <tr>
+                        <td>Fecha</td>
+                        <td style="color: lightgreen;">{{sismo['fecha']}}</td>
+                    </tr>
+                    <tr>
+                        <td>Profundidad</td>
+                        <td style="color: lightgreen;">{{sismo['profundidad']}} kilómetros</td>
+                    </tr>
+                    <tr>
+                        <td>Magnitud</td>
+                        <td style="color: lightgreen;">{{sismo['magnitud']}} (ml = Magnitud local)</td>
+                    </tr>
+                <tr>
+                        <td>Ref. Geográfica</td>
+                        <td style="color: lightgreen;">{{sismo['refGeografica']}}</td>
+                    </tr>
+                </tbody>
+                {% endfor %}
+            </table>
+
+            <div style="font-size: 25px;" class="container mt-5">
+                <ul class="pagination pagination-lg pager justify-content-center" id="myPager"></ul>
+            </div>
+
+
+
+            <h1 class="mt-1 mb-3"><span class="blue">&lt;</span>Gráfico Sismos<span class="blue">&gt;</span></h1>
+            <!-- Gráfico -->
+            <canvas id="grafico" width="100" height="50"></canvas>
+            <script>
+                var ctx = document.getElementById("grafico").getContext("2d")
+                var grafico = new Chart(ctx,{
+                    type:"line",
+                    data:{
+                        labels: {{labels | safe}},
+                        datasets:[
+                            {
+                                label:"Magnitud sismos",
+                                data: {{values | safe}},
+                                fill: false,
+                                borderColor: "rgb(75,192,192)",
+                                lineTension: 0.1
+                            }
+                        ]
+                    }
+                })
+            </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
   </body>
+
+  <script>
+    let miCanvas = document.getElementById("grafico").getContext("2d")
+    var chart = new Chart(miCanvas, {
+        type:"sismos",
+        data:{
+            labels:data_lebels,
+            datasets:[
+                {
+                    label:"Grafica de Sismos"
+                    backgroundColor:"orange",
+                }
+            ]
+            
+
+        }
+    } )
+</script>
+
 </html>
