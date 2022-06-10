@@ -4,7 +4,10 @@
     <title>
         Sismos
     </title>
+
+    <!-- Favicon -->
     <link rel="icon" href="https://img1.freepng.es/20180427/atq/kisspng-earthquake-weather-computer-icons-clip-art-earthquake-5ae2ee1e8890b6.6228560915248215345594.jpg">
+
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -82,23 +85,4 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
   </body>
-
-  <script>
-    let miCanvas = document.getElementById("grafico").getContext("2d")
-    var chart = new Chart(miCanvas, {
-        type:"sismos",
-        data:{
-            labels:data_lebels,
-            datasets:[
-                {
-                    label:"Grafica de Sismos"
-                    backgroundColor:"orange",
-                }
-            ]
-            
-
-        }
-    } )
-</script>
-
 </html>
